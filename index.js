@@ -24,6 +24,8 @@ async function run() {
 
         const allCategoryCollection = client.db('headphonesDatabase').collection('allCategory')
 
+        const myOrdersCollection = client.db('headphonesDatabase').collection('myOrders')
+
         app.get('/headphonesOptions', async (req, res) => {
             const query = {}
             const options = await allHeadphonesCollection.find(query).toArray()
@@ -36,6 +38,12 @@ async function run() {
             const result = await allCategoryCollection.find(filter).toArray();
 
             res.send(result);
+        })
+
+        app.post('/myOrders', async (req, res) => {
+            const myOrders = req.body;
+            const result = myOrdersCollection.insertOne(myOrders)
+            res.send(result)
         })
     }
     finally {
