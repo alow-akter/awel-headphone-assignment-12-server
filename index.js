@@ -45,6 +45,11 @@ async function run() {
             const result = myOrdersCollection.insertOne(myOrders)
             res.send(result)
         })
+        app.get('/myAllOrders', async (req, res) => {
+            const query = {}
+            const myAllOrders = await myOrdersCollection.find(query).toArray()
+            res.send(myAllOrders)
+        })
     }
     finally {
 
