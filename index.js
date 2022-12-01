@@ -112,11 +112,29 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/allUsers', verifyJWT, async (req, res) => {
+        app.get('/allBuyer', async (req, res) => {
             const query = {}
             const options = await usersCollection.find(query).toArray()
-            res.send(options)
+            const result = options.filter(option => option.role === 'Buyer')
+            res.send(result)
         })
+
+        app.get('/allSeller', async (req, res) => {
+            const query = {}
+            const options = await usersCollection.find(query).toArray()
+            const result = options.filter(option => option.role === 'Seller')
+            res.send(result)
+        })
+
+        app.get('/allUsers/:email', async (req, res) => {
+            const email = req.params.email
+            // console.log(email);
+            const query = { email }
+            const user = await usersCollection.findOne(query)
+            //  console.log(user);
+            res.send(user)
+        })
+
 
 
 
