@@ -74,7 +74,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/myAllOrders', async (req, res) => {
+        app.get('/myAllOrders', verifyJWT, async (req, res) => {
             const query = {}
             const myAllOrders = await myOrdersCollection.find(query).toArray()
             res.send(myAllOrders)
@@ -86,7 +86,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/myProduct', async (req, res) => {
+        app.get('/myProduct', verifyJWT, async (req, res) => {
             const query = {}
             const myProduct = await addProductCollection.find(query).toArray()
             res.send(myProduct)
@@ -126,12 +126,12 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/allUsers/:email', async (req, res) => {
+        app.get('/users/:email', async (req, res) => {
             const email = req.params.email
-            // console.log(email);
+
             const query = { email }
             const user = await usersCollection.findOne(query)
-            //  console.log(user);
+
             res.send(user)
         })
 
